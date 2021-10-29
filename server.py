@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relation, relationship
@@ -71,7 +72,7 @@ def register():
         email = request_data.get("email")
         password = request_data.get("password")
 
-        if (username or email or password) is not None and ((username or email or password) != ""):
+        if ((username or email or password) is not None) and ((username or email or password) != ""):
             hash_and_salted_password = generate_password_hash(
                 password,
                 method="pbkdf2:sha256",
@@ -92,7 +93,7 @@ def register():
 
         return jsonify({"message": "Bad request"}), 400
 
-    return render_template("index.html")
+    return render_template({"message": "CREATE NEW USER FORM"})
 
 
 @app.route("/api/log-in", methods=["GET", "POST"])
@@ -121,6 +122,38 @@ def login():
 @app.route("/api/authenticate")
 def authenticate():
     return jsonify({"session_validation": current_user.is_authenticated})
+
+
+@app.route("/api/create-post", methods=["GET", "POST"])
+def create_post():
+    if request.method == "POST" and request.is_json:
+        request_data = request.get_json()
+        author_id = current_user.id
+        author = current_user
+        title = request_data.get("title")
+        subtitle = request_data.get("subtitle")
+        date = datetime.now()
+        body = request_data.get("body")
+        img_url = request_data.get("imgUrl")
+
+        if ((title or subtitle or body or img_url) is not None) and ((title or subtitle or body or img_url) != ""):
+            new_post = BlogPost(
+                author=author,
+                title=title,
+                subtitle=subtitle,
+                date=date,
+                body=body,
+                img_url=img_url,
+            )
+
+            db.session.add(new_post)
+            db.session.commit()
+
+            return jsonify({"author": author.username, "title": title, "subtitle": subtitle, "date": date, "body": body, "img_url": img_url}), 201
+
+        return jsonify({"message": "Bad request!"}), 400
+
+    return jsonify({"message": "CREATE NEW POST FORM"})
 
 # @app.route("/api/all-blogs")
 # def get_all_blogs():
