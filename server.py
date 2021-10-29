@@ -45,6 +45,9 @@ class BlogPost(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
     comments = relationship("Comment", back_populates="parent_post")
 
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
 
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -155,13 +158,14 @@ def create_post():
 
     return jsonify({"message": "CREATE NEW POST FORM"})
 
-# @app.route("/api/all-blogs")
-# def get_all_blogs():
-#     all_blog_posts = BlogPost.query.all()
-#     print(all_blog_posts)
-#     return jsonify({"message": "ALL BLOGS"})
+
+@app.route("/api/all-blogs")
+def get_all_blogs():
+    all_blog_posts = BlogPost.query.all()
+
+    return jsonify(all_blog_posts=[blog_post.to_dict() for blog_post in all_blog_posts])
 
 
 if __name__ == "__main__":
     db.create_all()
-    app.run(debug=False)
+    app.run(debug=True)
