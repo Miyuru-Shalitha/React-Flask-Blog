@@ -60,6 +60,9 @@ def index():
     return render_template("index.html")
 
 
+######################## API ROUTES ########################
+
+
 @app.route("/api/create-user", methods=["GET", "POST"])
 def register():
     if (request.method == "POST") and request.is_json:
@@ -83,7 +86,7 @@ def register():
 
             db.session.add(new_user)
             db.session.commit()
-            # login_user(new_user)
+            login_user(new_user, remember=True)
 
             return jsonify({"username": username, "email": email, "password": password, "hash": hash_and_salted_password}), 201
 
@@ -107,12 +110,23 @@ def login():
             elif not check_password_hash(user.password, password):
                 return jsonify({"message": "The password is incorrect."}), 401
             else:
-                login_user(user)
+                login_user(user, remember=True)
                 return jsonify({"message": "Login successfull."}), 200
 
         return jsonify({"message": "Bad request"}), 400
 
     return render_template("index.html")
+
+
+@app.route("/api/authenticate")
+def authenticate():
+    return jsonify({"session_validation": current_user.is_authenticated})
+
+# @app.route("/api/all-blogs")
+# def get_all_blogs():
+#     all_blog_posts = BlogPost.query.all()
+#     print(all_blog_posts)
+#     return jsonify({"message": "ALL BLOGS"})
 
 
 if __name__ == "__main__":

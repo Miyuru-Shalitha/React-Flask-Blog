@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { ACTIONS } from "../App";
 
-function RegisterPage() {
+function RegisterPage({ dispatch }) {
   const [userSignUpData, setUserSignUpData] = useState({
     username: "",
     email: "",
@@ -48,8 +49,18 @@ function RegisterPage() {
     };
 
     fetch("/api/log-in", requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((response) => {
+        console.log(response.status);
+
+        if (response.status === 200) {
+          dispatch({ type: ACTIONS.LOG_IN });
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   const handleUserLogInData = (e) => {
