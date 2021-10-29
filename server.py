@@ -1,4 +1,5 @@
 from datetime import datetime
+from logging import log
 from flask import Flask, render_template, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relation, relationship
@@ -100,7 +101,7 @@ def register():
 
 
 @app.route("/api/log-in", methods=["GET", "POST"])
-def login():
+def log_in():
     if (request.method == "POST") and request.is_json:
         request_data = request.get_json()
         email = request_data.get("email")
@@ -120,6 +121,12 @@ def login():
         return jsonify({"message": "Bad request"}), 400
 
     return render_template("index.html")
+
+
+@app.route("/api/log-out")
+def log_out():
+    logout_user()
+    return jsonify({"message": "Successfully logged out"}), 200
 
 
 @app.route("/api/authenticate")
