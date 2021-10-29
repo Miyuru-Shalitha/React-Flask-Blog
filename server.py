@@ -159,7 +159,7 @@ def create_post():
     return jsonify({"message": "CREATE NEW POST FORM"})
 
 
-@app.route("/api/all-blogs")
+@app.route("/api/all-posts")
 def get_all_blogs():
     all_blog_posts = BlogPost.query.all()
 

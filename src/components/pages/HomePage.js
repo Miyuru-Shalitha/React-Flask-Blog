@@ -3,7 +3,7 @@ import CreatePostPage from "./CreatePostPage";
 
 function HomePage() {
   useEffect(() => {
-    fetch("/api/all-blogs")
+    fetch("/api/all-posts")
       .then((response) => response.json())
       .then((data) => console.log(data));
   }, []);
