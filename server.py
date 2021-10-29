@@ -66,8 +66,6 @@ def index():
 
 
 ######################## API ROUTES ########################
-
-
 @app.route("/api/create-user", methods=["GET", "POST"])
 def register():
     if (request.method == "POST") and request.is_json:
@@ -135,10 +133,10 @@ def authenticate():
 
 
 @app.route("/api/create-post", methods=["GET", "POST"])
+@login_required
 def create_post():
     if request.method == "POST" and request.is_json:
         request_data = request.get_json()
-        author_id = current_user.id
         author = current_user
         title = request_data.get("title")
         subtitle = request_data.get("subtitle")
@@ -167,6 +165,7 @@ def create_post():
 
 
 @app.route("/api/all-posts")
+@login_required
 def get_all_blogs():
     all_blog_posts = BlogPost.query.all()
 
