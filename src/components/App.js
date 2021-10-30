@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import RegisterPage from "./pages/RegisterPage";
+import HomePage from "./Home/HomePage";
+import RegisterPage from "./Register/RegisterPage";
 import Header from "../components/Header";
 
 const ACTIONS = {

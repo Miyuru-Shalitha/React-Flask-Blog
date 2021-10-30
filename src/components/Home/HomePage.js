@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import CreatePostPage from "./CreatePostPage";
-import Header from "../Header";
 
 function HomePage() {
   useEffect(() => {
@@ -10,10 +8,9 @@ function HomePage() {
   }, []);
 
   return (
-    <>
+    <div>
       <h1>HOME PAGE</h1>
-      {/* <CreatePostPage /> */}
-    </>
+    </div>
   );
 }
 
