@@ -1,5 +1,4 @@
 from datetime import datetime
-from logging import log
 from flask import Flask, render_template, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relation, relationship
@@ -165,7 +164,7 @@ def create_post():
 
 
 @app.route("/api/all-posts")
-@login_required
+# @login_required
 def get_all_blogs():
     all_blog_posts = BlogPost.query.all()
 

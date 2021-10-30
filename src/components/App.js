@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
+import Header from "../components/Header";
 
 const ACTIONS = {
   LOG_IN: "log-in",
@@ -37,24 +38,28 @@ function App() {
       });
   }, []);
 
-  const checkIsLoggedIn = (isLoggedIn) => {
-    if (isLoggedIn === null) {
-      return <h1>LOADING</h1>;
-    } else if (isLoggedIn) {
-      return <HomePage />;
-    } else {
-      return <RegisterPage dispatch={dispatch} />;
-    }
-  };
+  // const checkIsLoggedIn = (isLoggedIn) => {
+  //   if (isLoggedIn === null) {
+  //     return <h1>LOADING</h1>;
+  //   } else if (isLoggedIn) {
+  //     return <HomePage />;
+  //   } else {
+  //     return <RegisterPage dispatch={dispatch} />;
+  //   }
+  // };
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          {checkIsLoggedIn(state.isLoggedIn)}
-        </Route>
-      </Switch>
-    </Router>
+    <>
+      <Header />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            {/* {checkIsLoggedIn(state.isLoggedIn)} */}
+            <HomePage />
+          </Route>
+        </Switch>
+      </Router>
+    </>
   );
 }
 

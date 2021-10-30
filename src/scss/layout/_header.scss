@@ -1,0 +1,35 @@
+@use "../abstracts" as *;
+
+.header {
+  background-color: $color-primary;
+  padding: rem(8);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 rem(2) rem(5) rgba($color-box-shadow, 0.7);
+
+  &__text-container {
+    // background-color: #ffff00;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+
+  &__buttons-container {
+    & > button {
+      margin-right: rem(8);
+    }
+  }
+
+  &__profile-avatar-container {
+    // margin-left: rem(8);
+  }
+
+  &__profile-avatar {
+    width: rem(45);
+    border-radius: rem(25);
+  }
+}

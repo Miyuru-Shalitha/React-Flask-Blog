@@ -1,0 +1,10 @@
+@use "../abstracts" as *;
+
+.heading-primary {
+  color: #dddddd;
+  letter-spacing: rem(2);
+  font-family: "Permanent Marker", cursive;
+  text-transform: uppercase;
+  //   display: inline-block;
+  //   background-color: #ffff00;
+}
