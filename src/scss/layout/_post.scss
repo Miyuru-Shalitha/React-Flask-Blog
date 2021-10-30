@@ -1,0 +1,19 @@
+.post {
+  &__header {
+    width: 100%;
+    max-height: 70vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__image {
+    min-width: 100%;
+  }
+
+  &__heading-text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

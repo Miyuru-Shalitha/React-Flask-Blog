@@ -1,9 +1,13 @@
 @use "../abstracts" as *;
 
-.clr-primary {
+.u-clr-primary {
   color: $color-primary;
 }
 
-.clr-white {
+.u-clr-white {
   color: $color-white;
+}
+
+.u-font-lg {
+  font-size: rem(70);
 }

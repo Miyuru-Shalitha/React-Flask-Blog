@@ -2,6 +2,7 @@
 
 .blog-preview {
   background-color: rgba($color-white, 0.5);
+  color: $color-primary;
   max-width: 60%;
   margin: rem(30) auto;
   padding: rem(12);
@@ -10,16 +11,29 @@
   position: relative;
   z-index: 10;
   overflow: hidden;
+  cursor: pointer;
 
   display: flex;
   flex-direction: column;
+
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 rem(20) rgba($color-grey-dark, 0.3);
+  }
+
+  &:active {
+    transform: scale(1.06);
+    box-shadow: 0 0 rem(12) rgba($color-grey-dark, 0.5);
+  }
 
   &__title {
     align-self: center;
   }
 
   &__subtitle {
-    padding-left: rem(10);
+    padding: 0 0 rem(10) rem(10);
   }
 
   &__body {

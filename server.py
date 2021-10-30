@@ -69,6 +69,11 @@ def create_post_page():
     return render_template("index.html")
 
 
+@app.route("/post/<int:post_id>")
+def get_post_page(post_id):
+    return render_template("index.html")
+
+
 ######################## API ROUTES ########################
 @app.route("/api/create-user", methods=["GET", "POST"])
 def register():
@@ -187,6 +192,23 @@ def get_all_blog_posts():
         all_blog_posts.append(blog_post_dict)
 
     return jsonify(all_blog_posts=all_blog_posts)
+
+
+@app.route("/api/post/<int:post_id>")
+def get_post(post_id):
+    blog_post = BlogPost.query.get(post_id)
+
+    blog_post_dict = {
+        "id": blog_post.id,
+        "date": blog_post.date,
+        "author": blog_post.author.username,
+        "title": blog_post.title,
+        "subtitle": blog_post.subtitle,
+        "img_url": blog_post.img_url,
+        "body": blog_post.body,
+    }
+
+    return jsonify(blog_post=blog_post_dict), 200
 
 
 if __name__ == "__main__":
