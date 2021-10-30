@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import BlogPreview from "./BlogPreview";
 
 function HomePage() {
+  const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     fetch("/api/all-posts")
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => setPosts(data.all_blog_posts));
   }, []);
 
   return (
-    <div>
-      <h1>HOME PAGE</h1>
+    <div className="home">
+      {posts.map((post) => (
+        <BlogPreview key={post.id} post={post} />
+      ))}
     </div>
   );
 }

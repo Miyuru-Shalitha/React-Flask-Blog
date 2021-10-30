@@ -1,0 +1,7 @@
+@use "../abstracts" as *;
+
+.home {
+  background-color: $color-grey-light;
+  //   height: 100vh; // TEST
+  padding: rem(30);
+}

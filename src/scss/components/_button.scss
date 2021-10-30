@@ -5,12 +5,12 @@
   font-size: rem(16);
   border-radius: rem(3);
   cursor: pointer;
-  box-shadow: 0 0 rem(5) rgba($color-box-shadow, 0.7);
+  box-shadow: 0 0 rem(5) rgba($color-grey-dark, 0.7);
   transition: all 0.2s;
 
   &:hover {
     transform: translateY(rem(-1)) scale(1.1);
-    box-shadow: 0 0 rem(8) rgba($color-box-shadow, 0.4);
+    box-shadow: 0 0 rem(8) rgba($color-grey-dark, 0.4);
   }
 
   &--white {

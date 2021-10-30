@@ -1,0 +1,10 @@
+@use "../abstracts" as *;
+
+.blog-preview {
+  background-color: $color-white;
+  max-width: 70%;
+  margin: rem(30) auto;
+  padding: rem(12);
+  border-radius: rem(3);
+  box-shadow: 0 0 rem(5) rgba($color-grey-dark, 0.7);
+}

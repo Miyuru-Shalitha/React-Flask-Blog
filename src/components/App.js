@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./Home/HomePage";
 import RegisterPage from "./Register/RegisterPage";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const ACTIONS = {
   LOG_IN: "log-in",
@@ -59,6 +60,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      <Footer />
     </>
   );
 }

@@ -45,8 +45,8 @@ class BlogPost(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
     comments = relationship("Comment", back_populates="parent_post")
 
-    def to_dict(self):
-        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+    # def to_dict(self):
+    #     return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
 
 class Comment(db.Model):
@@ -166,9 +166,22 @@ def create_post():
 @app.route("/api/all-posts")
 # @login_required
 def get_all_blogs():
-    all_blog_posts = BlogPost.query.all()
+    all_blog_posts = []
 
-    return jsonify(all_blog_posts=[blog_post.to_dict() for blog_post in all_blog_posts])
+    for blog_post in BlogPost.query.all():
+        blog_post_dict = {
+            "id": blog_post.id,
+            "date": blog_post.date,
+            "author": blog_post.author.username,
+            "title": blog_post.title,
+            "subtitle": blog_post.subtitle,
+            "img_url": blog_post.img_url,
+            "body": blog_post.body
+        }
+
+        all_blog_posts.append(blog_post_dict)
+
+    return jsonify(all_blog_posts=all_blog_posts)
 
 
 if __name__ == "__main__":
