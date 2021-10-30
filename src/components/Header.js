@@ -8,7 +8,7 @@ function Header({ state, dispatch }) {
   return (
     <div className="header">
       <div className="header__text-container">
-        <h1 className="heading-primary">React-Flask Blog</h1>
+        <h1 className="heading-primary clr-white">React-Flask Blog</h1>
       </div>
 
       <div className="header__right">
@@ -35,6 +35,8 @@ function Header({ state, dispatch }) {
               </button>
             </>
           )}
+
+          <button className="btn btn--white">+ Create new post</button>
         </div>
 
         <div className="header__profile-avatar-container">

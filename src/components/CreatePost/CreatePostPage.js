@@ -32,7 +32,7 @@ function CreatePostPage() {
   };
 
   return (
-    <div>
+    <div className="create-post">
       <h1>CREATE POST</h1>
 
       <form onSubmit={handleSavePost}>

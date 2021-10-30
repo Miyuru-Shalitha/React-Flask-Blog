@@ -64,6 +64,11 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/create-post")
+def create_post_page():
+    return render_template("index.html")
+
+
 ######################## API ROUTES ########################
 @app.route("/api/create-user", methods=["GET", "POST"])
 def register():
@@ -94,7 +99,7 @@ def register():
 
         return jsonify({"message": "Bad request"}), 400
 
-    return render_template({"message": "CREATE NEW USER FORM"})
+    return jsonify({"message": "CREATE NEW USER FORM"})
 
 
 @app.route("/api/log-in", methods=["GET", "POST"])
@@ -117,7 +122,7 @@ def log_in():
 
         return jsonify({"message": "Bad request"}), 400
 
-    return render_template("index.html")
+    return jsonify({"message": "LOG IN USER FORM"})
 
 
 @app.route("/api/log-out")
@@ -176,7 +181,7 @@ def get_all_blog_posts():
             "title": blog_post.title,
             "subtitle": blog_post.subtitle,
             "img_url": blog_post.img_url,
-            "body": blog_post.body
+            "body": "".join([letter for (i, letter) in enumerate(blog_post.body) if i < 500]) + "..."
         }
 
         all_blog_posts.append(blog_post_dict)

@@ -1,10 +1,54 @@
 @use "../abstracts" as *;
 
 .blog-preview {
-  background-color: $color-white;
-  max-width: 70%;
+  background-color: rgba($color-white, 0.5);
+  max-width: 60%;
   margin: rem(30) auto;
   padding: rem(12);
   border-radius: rem(3);
   box-shadow: 0 0 rem(5) rgba($color-grey-dark, 0.7);
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    align-self: center;
+  }
+
+  &__subtitle {
+    padding-left: rem(10);
+  }
+
+  &__body {
+    background-color: rgba($color-white, 0.5);
+    padding: rem(10);
+    border-radius: rem(3);
+  }
+
+  &__details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: rem(10);
+
+    & > p {
+      font-weight: bold;
+      font-style: italic;
+    }
+  }
+
+  &__image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -10;
+  }
+
+  &__image {
+    width: 100%;
+    opacity: 0.5;
+  }
 }

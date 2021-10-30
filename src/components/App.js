@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./Home/HomePage";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import CreatePostPage from "./CreatePost/CreatePostPage";
 
 const ACTIONS = {
   LOG_IN: "log-in",
@@ -61,6 +62,8 @@ function App() {
             {/* {checkIsLoggedIn(state.isLoggedIn)} */}
             <HomePage />
           </Route>
+
+          <Route path="/create-post" component={CreatePostPage} />
         </Switch>
       </Router>
       <Footer />
