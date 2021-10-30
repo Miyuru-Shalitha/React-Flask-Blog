@@ -1,6 +1,6 @@
 import React from "react";
 
-function BlogPreview({ post }) {
+function BlogPostPreview({ post }) {
   return (
     <div className="blog-preview">
       <div>
@@ -14,4 +14,4 @@ function BlogPreview({ post }) {
   );
 }
 
-export default BlogPreview;
+export default BlogPostPreview;

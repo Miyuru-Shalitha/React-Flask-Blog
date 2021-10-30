@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./Home/HomePage";
-import RegisterPage from "./Register/RegisterPage";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -37,7 +36,11 @@ function App() {
           dispatch({ type: ACTIONS.LOG_OUT });
         }
       });
-  }, []);
+  }, [state.isLoggedIn]);
+
+  useEffect(() => {
+    console.log(state.isLoggedIn);
+  }, [state.isLoggedIn]);
 
   // const checkIsLoggedIn = (isLoggedIn) => {
   //   if (isLoggedIn === null) {
@@ -51,7 +54,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header state={state} dispatch={dispatch} />
       <Router>
         <Switch>
           <Route exact path="/">

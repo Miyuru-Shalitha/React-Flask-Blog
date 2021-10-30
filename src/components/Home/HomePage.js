@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import BlogPreview from "./BlogPreview";
+import BlogPostPreview from "./BlogPostPreview";
 
 function HomePage() {
   const [posts, setPosts] = useState([]);
@@ -13,7 +13,7 @@ function HomePage() {
   return (
     <div className="home">
       {posts.map((post) => (
-        <BlogPreview key={post.id} post={post} />
+        <BlogPostPreview key={post.id} post={post} />
       ))}
     </div>
   );

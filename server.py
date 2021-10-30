@@ -165,7 +165,7 @@ def create_post():
 
 @app.route("/api/all-posts")
 # @login_required
-def get_all_blogs():
+def get_all_blog_posts():
     all_blog_posts = []
 
     for blog_post in BlogPost.query.all():

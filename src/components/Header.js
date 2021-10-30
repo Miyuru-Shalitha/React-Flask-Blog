@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Register from "./Register/Register";
 
-function Header() {
+function Header({ state, dispatch }) {
+  const [showRegister, setShowRegister] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+
   return (
     <div className="header">
       <div className="header__text-container">
@@ -9,8 +13,28 @@ function Header() {
 
       <div className="header__right">
         <div className="header__buttons-container">
-          <button className="btn btn--white">Log In</button>
-          <button className="btn btn--outline">Sign Up</button>
+          {!showRegister && !state.isLoggedIn && (
+            <>
+              <button
+                className="btn btn--white"
+                onClick={() => {
+                  setShowRegister(true);
+                  setIsSignUp(false);
+                }}
+              >
+                Log In
+              </button>
+              <button
+                className="btn btn--outline-white"
+                onClick={() => {
+                  setShowRegister(true);
+                  setIsSignUp(true);
+                }}
+              >
+                Sign Up
+              </button>
+            </>
+          )}
         </div>
 
         <div className="header__profile-avatar-container">
@@ -21,6 +45,10 @@ function Header() {
           />
         </div>
       </div>
+
+      {showRegister && !state.isLoggedIn && (
+        <Register dispatch={dispatch} isSignUp={isSignUp} />
+      )}
     </div>
   );
 }
