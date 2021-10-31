@@ -68,6 +68,9 @@ class Comment(db.Model):
     text = db.Column(db.Text, nullable=False)
 
 
+db.create_all()
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -227,5 +230,4 @@ app.logger.setLevel(logging.ERROR)
 
 
 if __name__ == "__main__":
-    db.create_all()
     app.run(debug=True)
