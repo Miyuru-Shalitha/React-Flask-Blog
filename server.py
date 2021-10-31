@@ -192,18 +192,18 @@ def create_post():
 def get_all_blog_posts():
     all_blog_posts = []
 
-    # for blog_post in BlogPost.query.all():
-    #     blog_post_dict = {
-    #         "id": blog_post.id,
-    #         "date": blog_post.date,
-    #         "author": blog_post.author.username,
-    #         "title": blog_post.title,
-    #         "subtitle": blog_post.subtitle,
-    #         "img_url": blog_post.img_url,
-    #         "body": "".join([letter for (i, letter) in enumerate(blog_post.body) if i < 500]) + "..."
-    #     }
+    for blog_post in BlogPost.query.all():
+        blog_post_dict = {
+            "id": blog_post.id,
+            "date": blog_post.date,
+            "author": blog_post.author.username,
+            "title": blog_post.title,
+            "subtitle": blog_post.subtitle,
+            "img_url": blog_post.img_url,
+            "body": "".join([letter for (i, letter) in enumerate(blog_post.body) if i < 500]) + "..."
+        }
 
-    #     all_blog_posts.append(blog_post_dict)
+        all_blog_posts.append(blog_post_dict)
 
     return jsonify(all_blog_posts=all_blog_posts), 200
 
