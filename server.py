@@ -1,4 +1,6 @@
 import os
+import sys
+import logging
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -8,11 +10,17 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 
 
 app = Flask(__name__)
-# app.config["SECRET_KEY"] = "It's a secret!"
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///react-flask-blog.db"
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+#####################################################################
+uri = os.getenv("DATABASE_URL", "sqlite:///react-flask-blog.db")
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = uri
+#####################################################################
+# app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+#     "DATABASE_URL", "sqlite:///react-flask-blog.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
@@ -60,6 +68,9 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     comment_author = relation("User", back_populates="comments")
     text = db.Column(db.Text, nullable=False)
+
+
+db.create_all()
 
 
 @app.route("/")
@@ -194,7 +205,7 @@ def get_all_blog_posts():
 
         all_blog_posts.append(blog_post_dict)
 
-    return jsonify(all_blog_posts=all_blog_posts)
+    return jsonify(all_blog_posts=all_blog_posts), 200
 
 
 @app.route("/api/post/<int:post_id>")
@@ -214,6 +225,11 @@ def get_post(post_id):
     return jsonify(blog_post=blog_post_dict), 200
 
 
+# #######################################################
+# app.logger.addHandler(logging.StreamHandler(sys.stdout))
+# app.logger.setLevel(logging.ERROR)
+# #######################################################
+
+
 if __name__ == "__main__":
-    db.create_all()
     app.run(debug=False)

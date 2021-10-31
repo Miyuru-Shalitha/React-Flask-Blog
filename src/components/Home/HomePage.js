@@ -7,7 +7,10 @@ function HomePage() {
   useEffect(() => {
     fetch("/api/all-posts")
       .then((response) => response.json())
-      .then((data) => setPosts(data.all_blog_posts));
+      .then((data) => {
+        setPosts(data.all_blog_posts)
+        console.log(posts)
+      });
   }, []);
 
   return (
