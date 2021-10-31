@@ -1,4 +1,6 @@
 import os
+import sys
+import logging
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -212,6 +214,12 @@ def get_post(post_id):
     }
 
     return jsonify(blog_post=blog_post_dict), 200
+
+
+#######################################################
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
+#######################################################
 
 
 if __name__ == "__main__":
