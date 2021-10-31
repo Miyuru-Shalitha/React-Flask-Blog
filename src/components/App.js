@@ -66,6 +66,8 @@ function App() {
 
           <Route path="/create-post" component={CreatePostPage} />
 
+          <Route path="/edit-post/:postId" component={CreatePostPage} />
+
           <Route path="/post/:postId" component={PostPage} />
         </Switch>
       </Router>

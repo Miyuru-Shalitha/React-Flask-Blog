@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function PostPage({ match }) {
   const [post, setPost] = useState({
+    id: "",
     date: "",
     author: "",
     title: "",
@@ -10,6 +12,8 @@ function PostPage({ match }) {
     imgUrl: "",
     body: "",
   });
+
+  const history = useHistory("");
 
   useEffect(() => {
     fetch(`/api/post/${match.params.postId}`)
@@ -19,6 +23,7 @@ function PostPage({ match }) {
         const blogPost = data.blog_post;
 
         setPost({
+          id: blogPost.id,
           date: blogPost.date,
           author: blogPost.author,
           title: blogPost.title,
@@ -28,6 +33,24 @@ function PostPage({ match }) {
         });
       });
   }, []);
+
+  const handleDeletePost = () => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ post_id: post.id }),
+    };
+
+    fetch("/api/delete", requestOptions)
+      .then((response) => {
+        if (response.status === 204) {
+          history.push("/");
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
 
   return (
     <div className="post">
@@ -49,11 +72,20 @@ function PostPage({ match }) {
         dangerouslySetInnerHTML={{ __html: `${post.body}` }}
       />
 
-      <Link to="/">
-        <button className="post__back-button btn btn--white">
-          Back to homepage
-        </button>
-      </Link>
+      <div className="post__buttons">
+        <Link to="/">
+          <button className="btn btn--primary">Back to homepage</button>
+        </Link>
+
+        <div className="post__control-buttons">
+          <button onClick={handleDeletePost} className="btn btn--danger">
+            Delete
+          </button>
+          <Link to={`/edit-post/${post.id}`}>
+            <button className="btn btn--green">Edit</button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

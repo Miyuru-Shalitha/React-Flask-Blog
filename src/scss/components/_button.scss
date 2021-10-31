@@ -36,6 +36,28 @@
     }
   }
 
+  &--green {
+    background-color: $color-green;
+    color: $color-white;
+    border: none;
+
+    &:active {
+      background-color: $color-white;
+      color: $color-green;
+    }
+  }
+
+  &--danger {
+    background-color: $color-red;
+    color: $color-white;
+    border: none;
+
+    &:active {
+      background-color: $color-white;
+      color: $color-red;
+    }
+  }
+
   &--outline-primary {
     background-color: transparent;
     border: rem(1) solid $color-primary;

@@ -226,9 +226,24 @@ def get_post(post_id):
     return jsonify(blog_post=blog_post_dict), 200
 
 
-@app.route("/api/edit/<int:post_id>")
+@app.route("/api/edit/<int:post_id>", methods=["PATCH"])
 def edit_post(post_id):
-    return jsonify({"message": "EDIT"})
+    if request.is_json:
+        request_data = request.get_json()
+
+        post = BlogPost.query.get(post_id)
+
+        post.author = current_user
+        post.title = request_data.get("title")
+        post.subtitle = request_data.get("subtitle")
+        post.body = request_data.get("body")
+        post.img_url = request_data.get("img_url")
+
+        db.session.commit()
+
+        return jsonify({"message": "Edit Successfull"}), 200
+
+    return jsonify({"message": "Bad request"}), 400
 
 
 @app.route("/api/delete", methods=["DELETE"])

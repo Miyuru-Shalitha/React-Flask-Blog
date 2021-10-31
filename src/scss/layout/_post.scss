@@ -23,7 +23,14 @@
     margin: rem(80) rem(80) rem(40) rem(80);
   }
 
-  &__back-button {
-    margin: 0 0 rem(40) rem(80);
+  &__buttons {
+    margin: 0 rem(80) rem(40) rem(80);
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__control-buttons > button:first-child {
+    margin-right: rem(10);
   }
 }

@@ -1,18 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { useHistory } from "react-router-dom";
 
-function CreatePostPage() {
+function CreatePostPage({ match }) {
+  const [isEdit, setIsEdit] = useState(false);
+
   const [post, setPost] = useState({
+    id: "",
     title: "",
     subtitle: "",
     body: "",
     imgUrl: "",
   });
 
-  const handleSavePost = (e) => {
-    e.preventDefault();
+  const history = useHistory("");
 
+  useEffect(() => {
+    if (match.path === "/edit-post/:postId") {
+      setIsEdit(true);
+
+      fetch(`/api/post/${match.params.postId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          const blogPost = data.blog_post;
+
+          setPost({
+            id: blogPost.id,
+            title: blogPost.title,
+            subtitle: blogPost.subtitle,
+            body: blogPost.body,
+            imgUrl: blogPost.img_url,
+          });
+        });
+    }
+  }, []);
+
+  const createPost = () => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,6 +47,39 @@ function CreatePostPage() {
     fetch("/api/create-post", requestOptions)
       .then((response) => response.json())
       .then((data) => console.log(data));
+  };
+
+  const editPost = () => {
+    const requestOptions = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: post.title,
+        subtitle: post.subtitle,
+        body: post.body,
+        img_url: post.imgUrl,
+      }),
+    };
+
+    fetch(`/api/edit/${post.id}`, requestOptions)
+      .then((response) => {
+        if (response.status === 200) {
+          history.push(`/post/${post.id}`);
+        }
+
+        return response.json();
+      })
+      .then((data) => console.log(data));
+  };
+
+  const handleSavePost = (e) => {
+    e.preventDefault();
+
+    if (isEdit) {
+      editPost();
+    } else {
+      createPost();
+    }
   };
 
   const handlePostData = (e) => {
@@ -71,7 +129,7 @@ function CreatePostPage() {
         <div>
           <CKEditor
             editor={ClassicEditor}
-            data="<p>Enter post content here.</p>"
+            data={!isEdit ? "<p>Enter post content here.</p>" : post.body}
             onChange={(event, editor) => {
               const data = editor.getData();
               setPost((prevValue) => ({
