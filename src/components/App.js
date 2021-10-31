@@ -61,7 +61,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             {/* {checkIsLoggedIn(state.isLoggedIn)} */}
-            <HomePage />
+            <HomePage state={state} />
           </Route>
 
           <Route path="/create-post" component={CreatePostPage} />

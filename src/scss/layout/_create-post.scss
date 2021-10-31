@@ -1,24 +1,23 @@
 @use "../abstracts" as *;
 
 .create-post {
-  height: 100vh; // TEST
+  min-height: 70vh;
 
   &__form {
     display: flex;
     flex-direction: column;
     max-width: 50%;
 
-    margin: 0 auto;
-    margin-top: rem(60);
+    margin: rem(60) auto;
 
     & > input {
-      margin-bottom: rem(10);
+      margin-bottom: rem(20);
       padding: rem(10);
       font-size: rem(18);
     }
 
     & > button {
-      margin-top: rem(10);
+      margin-top: rem(20);
       align-self: center;
     }
   }

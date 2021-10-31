@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BlogPostPreview from "./BlogPostPreview";
 
-function HomePage() {
+function HomePage({ state }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -16,9 +16,11 @@ function HomePage() {
 
   return (
     <div className="home">
-      <Link to="/create-post">
-        <button className="btn btn--white">+ Create new post</button>
-      </Link>
+      {state.isLoggedIn && (
+        <Link to="/create-post">
+          <button className="btn btn--white">+ Create new post</button>
+        </Link>
+      )}
 
       {posts.map((post) => (
         <BlogPostPreview key={post.id} post={post} />
