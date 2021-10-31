@@ -45,7 +45,13 @@ function CreatePostPage({ match }) {
     };
 
     fetch("/api/create-post", requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 201) {
+          history.push("/");
+        }
+
+        return response.json();
+      })
       .then((data) => console.log(data));
   };
 
