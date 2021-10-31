@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 function CreatePostPage() {
   const [post, setPost] = useState({
@@ -33,15 +35,14 @@ function CreatePostPage() {
 
   return (
     <div className="create-post">
-      <h1>CREATE POST</h1>
-
-      <form onSubmit={handleSavePost}>
+      <form className="create-post__form" onSubmit={handleSavePost}>
         <input
           type="text"
           placeholder="title"
           name="title"
           onChange={handlePostData}
           value={post.title}
+          required
         />
         <input
           type="text"
@@ -49,23 +50,41 @@ function CreatePostPage() {
           name="subtitle"
           onChange={handlePostData}
           value={post.subtitle}
+          required
         />
-        <input
+        {/* <input
           type="text"
           placeholder="content"
           name="body"
           onChange={handlePostData}
           value={post.body}
-        />
+        /> */}
         <input
           type="text"
           placeholder="image url"
           name="imgUrl"
           onChange={handlePostData}
           value={post.imgUrl}
+          required
         />
 
-        <button type="submit">Save</button>
+        <div>
+          <CKEditor
+            editor={ClassicEditor}
+            data="<p>Enter post content here.</p>"
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setPost((prevValue) => ({
+                ...prevValue,
+                body: data,
+              }));
+            }}
+          />
+        </div>
+
+        <button type="submit" className="btn btn--primary">
+          Save
+        </button>
       </form>
     </div>
   );

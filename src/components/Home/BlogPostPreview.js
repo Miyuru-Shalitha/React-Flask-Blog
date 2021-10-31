@@ -16,7 +16,11 @@ function BlogPostPreview({ post }) {
           {post.title}
         </h2>
         <h3 className="blog-preview__subtitle">{post.subtitle}</h3>
-        <p className="blog-preview__body">{post.body}</p>
+        {/* <div className="blog-preview__body">{post.body}</div> */}
+        <div
+          className="blog-preview__subtitle"
+          dangerouslySetInnerHTML={{ __html: `${post.body}` }}
+        />
         <div className="blog-preview__details">
           <p>Posted by: {post.author}</p>
           <p>Date: {post.date}</p>

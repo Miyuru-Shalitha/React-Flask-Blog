@@ -42,7 +42,8 @@ function PostPage({ match }) {
         </div>
       </div>
 
-      <p>{post.body}</p>
+      {/* <p>{post.body}</p> */}
+      <div dangerouslySetInnerHTML={{ __html: `${post.body}` }} />
     </div>
   );
 }

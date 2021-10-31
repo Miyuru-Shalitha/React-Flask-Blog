@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Register from "./Register/Register";
 
 function Header({ state, dispatch }) {
@@ -35,8 +35,6 @@ function Header({ state, dispatch }) {
               </button>
             </>
           )}
-
-          <button className="btn btn--white">+ Create new post</button>
         </div>
 
         <div className="header__profile-avatar-container">

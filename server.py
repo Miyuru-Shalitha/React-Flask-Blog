@@ -10,7 +10,8 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+# app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+app.config["SECRET_KEY"] = "It's a secret!"
 
 #####################################################################
 uri = os.getenv("DATABASE_URL", "sqlite:///react-flask-blog.db")
@@ -232,4 +233,4 @@ def get_post(post_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)

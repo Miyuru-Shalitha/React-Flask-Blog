@@ -56,8 +56,8 @@ function App() {
 
   return (
     <>
-      <Header state={state} dispatch={dispatch} />
       <Router>
+        <Header state={state} dispatch={dispatch} />
         <Switch>
           <Route exact path="/">
             {/* {checkIsLoggedIn(state.isLoggedIn)} */}
