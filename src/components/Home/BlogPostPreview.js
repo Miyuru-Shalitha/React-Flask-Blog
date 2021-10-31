@@ -1,9 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function BlogPostPreview({ post }) {
+function BlogPostPreview({ post, getAllPosts }) {
+  const handleDeletePost = () => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ post_id: post.id }),
+    };
+
+    fetch("/api/delete", requestOptions)
+      .then((response) => {
+        if (response.status === 204) {
+          getAllPosts();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
-    <Link to={`/post/${post.id}`} style={{ textDecoration: "none" }}>
+    <>
       <div
         className="blog-preview"
         // style={{
@@ -32,8 +50,23 @@ function BlogPostPreview({ post }) {
             alt="Post image"
           />
         </div>
+
+        <div className="blog-preview__links-container">
+          <Link to={`/post/${post.id}`} style={{ textDecoration: "none" }}>
+            <button className="blog-preview__read-more-button">
+              Read more
+            </button>
+          </Link>
+
+          <button
+            onClick={handleDeletePost}
+            className="blog-preview__delete-button"
+          >
+            Delete
+          </button>
+        </div>
       </div>
-    </Link>
+    </>
   );
 }
 

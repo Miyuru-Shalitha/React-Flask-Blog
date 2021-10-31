@@ -11,22 +11,22 @@
   position: relative;
   z-index: 10;
   overflow: hidden;
-  cursor: pointer;
+  // cursor: pointer;
 
   display: flex;
   flex-direction: column;
 
   transition: all 0.2s;
 
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 rem(20) rgba($color-grey-dark, 0.3);
-  }
+  // &:hover {
+  //   transform: scale(1.1);
+  //   box-shadow: 0 0 rem(20) rgba($color-grey-dark, 0.3);
+  // }
 
-  &:active {
-    transform: scale(1.06);
-    box-shadow: 0 0 rem(12) rgba($color-grey-dark, 0.5);
-  }
+  // &:active {
+  //   transform: scale(1.06);
+  //   box-shadow: 0 0 rem(12) rgba($color-grey-dark, 0.5);
+  // }
 
   &__title {
     align-self: center;
@@ -64,5 +64,13 @@
   &__image {
     width: 100%;
     opacity: 0.5;
+  }
+
+  &__links-container {
+    background-color: #ffff00;
+
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 }

@@ -226,6 +226,23 @@ def get_post(post_id):
     return jsonify(blog_post=blog_post_dict), 200
 
 
+@app.route("/api/edit/<int:post_id>")
+def edit_post(post_id):
+    return jsonify({"message": "EDIT"})
+
+
+@app.route("/api/delete", methods=["DELETE"])
+def delete_post():
+    if request.is_json:
+        post_id = request.get_json().get("post_id")
+        post_to_delete = BlogPost.query.get(post_id)
+        db.session.delete(post_to_delete)
+        db.session.commit()
+
+        return jsonify({"message": "Delete successfull"}), 204
+
+    return jsonify({"message": "Bad request"}), 400
+
 # #######################################################
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))
 # app.logger.setLevel(logging.ERROR)

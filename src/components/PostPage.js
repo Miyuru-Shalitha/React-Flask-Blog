@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function PostPage({ match }) {
   const [post, setPost] = useState({
@@ -43,7 +44,16 @@ function PostPage({ match }) {
       </div>
 
       {/* <p>{post.body}</p> */}
-      <div dangerouslySetInnerHTML={{ __html: `${post.body}` }} />
+      <div
+        className="post__body"
+        dangerouslySetInnerHTML={{ __html: `${post.body}` }}
+      />
+
+      <Link to="/">
+        <button className="post__back-button btn btn--white">
+          Back to homepage
+        </button>
+      </Link>
     </div>
   );
 }
