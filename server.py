@@ -89,6 +89,11 @@ def get_post_page(post_id):
     return render_template("index.html")
 
 
+@app.route("/edit-post/<int:post_id>")
+def edit_post_page(post_id):
+    return render_template("index.html")
+
+
 ######################## API ROUTES ########################
 @app.route("/api/create-user", methods=["GET", "POST"])
 def register():
