@@ -271,8 +271,13 @@ def add_comment():
         post_id = request_data.get("post_id")
         comment_text = request_data.get("comment_text")
 
-        if (post_id or comment_text) is not None:
+        if ((post_id or comment_text) is not None) and (comment_text != ""):
             parent_post = BlogPost.query.get(post_id)
+
+            ############IF I DELETE THIS CREATE NEW COMMENT WILL GIVE AN ERROR!############
+            print(parent_post)
+            print(current_user)
+            ###############################################################################
 
             new_comment = Comment(
                 parent_post=parent_post,
