@@ -1,0 +1,52 @@
+@use "../abstracts" as *;
+
+.comment {
+  background-color: $color-white;
+  padding: rem(20);
+  box-shadow: 0 0 rem(5) rgba($color-grey-dark, 0.8);
+  border-radius: rem(3);
+  max-width: 75%;
+
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: rem(20);
+  }
+
+  &__profile-avatar {
+    width: rem(30);
+    border-radius: rem(15);
+    border: rem(1) solid $color-grey-dark;
+    box-shadow: rem(-1) rem(-1) rem(5) rgba($color-grey-dark, 0.8);
+
+    position: absolute;
+    top: rem(-10);
+    left: rem(-10);
+  }
+
+  &__details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: rem(10);
+    margin-bottom: rem(3);
+    font-size: rem(13);
+  }
+
+  &__author {
+    // text-decoration: underline;
+    // font-style: italic;
+    // font-weight: bold;
+  }
+
+  &__buttons-container {
+    & > button:first-child {
+      margin-right: rem(3);
+    }
+  }
+
+  &__edit-form {
+    & > form > textarea {
+      width: 100%;
+    }
+  }
+}

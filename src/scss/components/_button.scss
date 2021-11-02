@@ -14,6 +14,21 @@
     box-shadow: 0 0 rem(8) rgba($color-grey-dark, 0.4);
   }
 
+  &--small {
+    padding: rem(5);
+    font-size: rem(13);
+    border-radius: rem(3);
+    cursor: pointer;
+    text-transform: uppercase;
+    // box-shadow: 0 0 rem(5) rgba($color-grey-dark, 0.7);
+    transition: all 0.2s;
+
+    &:hover {
+      transform: translateY(rem(-1)) scale(1.1);
+      box-shadow: 0 0 rem(4) rgba($color-grey-dark, 0.4);
+    }
+  }
+
   &--primary {
     background-color: $color-primary;
     color: $color-white;

@@ -4,7 +4,7 @@ import HomePage from "./Home/HomePage";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import CreatePostPage from "./CreatePost/CreatePostPage";
-import PostPage from "./PostPage";
+import PostPage from "./Post/PostPage";
 
 const ACTIONS = {
   LOG_IN: "log-in",
