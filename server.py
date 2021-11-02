@@ -2,7 +2,7 @@ import os
 import sys
 import logging
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, json, render_template, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relation, relationship
 from flask_sqlalchemy import SQLAlchemy
@@ -67,7 +67,7 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
     parent_post = relationship("BlogPost", back_populates="comments")
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    comment_author = relation("User", back_populates="comments")
+    comment_author = relationship("User", back_populates="comments")
     text = db.Column(db.Text, nullable=False)
 
 
@@ -262,6 +262,32 @@ def delete_post():
         return jsonify({"message": "Delete successfull"}), 204
 
     return jsonify({"message": "Bad request"}), 400
+
+
+@app.route("/api/add-comment", methods=["GET", "POST"])
+def add_comment():
+    if request.method == "POST" and request.is_json:
+        request_data = request.get_json()
+        post_id = request_data.get("post_id")
+        comment_text = request_data.get("comment_text")
+
+        if (post_id or comment_text) is not None:
+            parent_post = BlogPost.query.get(post_id)
+
+            new_comment = Comment(
+                parent_post=parent_post,
+                comment_author=current_user,
+                text=comment_text
+            )
+
+            db.session.add(new_comment)
+            db.session.commit()
+
+            return jsonify({"message": "Comment added successfully!"}), 201
+
+        return jsonify({"message": "Bad request"}), 400
+
+    return jsonify({"message": "Hello, world!"}), 200
 
 # #######################################################
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))

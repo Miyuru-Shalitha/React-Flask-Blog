@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Comment from "./Comment";
 
 function PostPage({ match }) {
+  const history = useHistory("");
+
   const [post, setPost] = useState({
     id: "",
     date: "",
@@ -14,7 +16,7 @@ function PostPage({ match }) {
     body: "",
   });
 
-  const history = useHistory("");
+  const [commentText, setCommentText] = useState("");
 
   useEffect(() => {
     fetch(`/api/post/${match.params.postId}`)
@@ -51,6 +53,32 @@ function PostPage({ match }) {
       .then((data) => {
         console.log(data);
       });
+  };
+
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ post_id: post.id, comment_text: commentText }),
+    };
+
+    fetch("/api/add-comment", requestOptions)
+      .then((response) => {
+        if (response.status === 201) {
+          setCommentText("");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+  const handleChangeComment = (e) => {
+    setCommentText(e.target.value);
   };
 
   return (
@@ -94,18 +122,29 @@ function PostPage({ match }) {
         <div className="comment-section__heading">
           <h1 className="comment-section__heading-text">COMMENTS</h1>
 
-          <form className="comment-section__comment-form">
+          <form
+            className="comment-section__comment-form"
+            onSubmit={handleSubmitComment}
+          >
             <textarea
               name="comment"
               rows="4"
               placeholder="Add a comment"
+              onChange={handleChangeComment}
+              value={commentText}
             ></textarea>
 
             <div className="comment-section__form-buttons-container">
               <button className="btn btn--primary" type="submit">
                 Save
               </button>
-              <button className="btn btn--outline-primary" type="reset">
+              <button
+                className="btn btn--outline-primary"
+                type="reset"
+                onClick={() => {
+                  setCommentText("");
+                }}
+              >
                 Cancel
               </button>
             </div>
