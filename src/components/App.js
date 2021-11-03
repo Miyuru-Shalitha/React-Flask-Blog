@@ -27,6 +27,7 @@ function reducer(state, action) {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, { isLoggedIn: null });
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     fetch("/api/authenticate")
@@ -34,14 +35,12 @@ function App() {
       .then((data) => {
         if (data.session_validation) {
           dispatch({ type: ACTIONS.LOG_IN });
+          setCurrentUser(data.current_user);
         } else {
           dispatch({ type: ACTIONS.LOG_OUT });
+          setCurrentUser(null);
         }
       });
-  }, [state.isLoggedIn]);
-
-  useEffect(() => {
-    console.log(state.isLoggedIn);
   }, [state.isLoggedIn]);
 
   // const checkIsLoggedIn = (isLoggedIn) => {
@@ -68,7 +67,9 @@ function App() {
 
           <Route path="/edit-post/:postId" component={CreatePostPage} />
 
-          <Route path="/post/:postId" component={PostPage} />
+          <Route path="/post/:postId">
+            <PostPage currentUser={currentUser} />
+          </Route>
         </Switch>
       </Router>
       <Footer />

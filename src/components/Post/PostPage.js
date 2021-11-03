@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Comment from "./Comment";
 
-function PostPage({ match }) {
+function PostPage({ currentUser }) {
   const history = useHistory("");
 
   const [post, setPost] = useState({
@@ -21,7 +21,9 @@ function PostPage({ match }) {
   const [commentText, setCommentText] = useState("");
 
   useEffect(() => {
-    fetch(`/api/post/${match.params.postId}`)
+    const postId = history.location.pathname.split("/")[2];
+
+    fetch(`/api/post/${postId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -165,7 +167,11 @@ function PostPage({ match }) {
 
         <div className="comment-section__comments">
           {comments.map((comment) => (
-            <Comment key={comment.id} comment={comment} />
+            <Comment
+              key={comment.id}
+              comment={comment}
+              currentUser={currentUser}
+            />
           ))}
         </div>
       </div>

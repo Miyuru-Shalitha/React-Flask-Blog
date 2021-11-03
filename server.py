@@ -158,7 +158,16 @@ def log_out():
 
 @app.route("/api/authenticate")
 def authenticate():
-    return jsonify({"session_validation": current_user.is_authenticated})
+    if current_user.is_authenticated:
+        current_user_dict = {
+            "id": current_user.id,
+            "username": current_user.username,
+            "email": current_user.email,
+        }
+
+        return jsonify({"session_validation": True, "current_user": current_user_dict})
+
+    return jsonify({"session_validation": False, "current_user": None})
 
 
 @app.route("/api/create-post", methods=["GET", "POST"])
@@ -306,7 +315,10 @@ def get_comments(post_id):
         comment_dict = {
             "id": comment.id,
             "post_id": comment.post_id,
-            "comment_author": comment.comment_author.username,
+            "comment_author": {
+                "id": comment.comment_author.id,
+                "username": comment.comment_author.username
+            },
             # "comment_author_profile_img_url": comment.comment_author.img_url,
             "text": comment.text
         }

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Comment({ comment }) {
+function Comment({ comment, currentUser }) {
+  const [showEditForm, setShowEditForm] = useState(false);
+
   return (
     <div className="comment">
       <div className="comment__profile-avatar-container">
@@ -18,22 +20,45 @@ function Comment({ comment }) {
         {/* <p>Date</p> */}
       </div>
 
-      {/* <div className="comment__buttons-container">
-        <button className="btn--small btn--green">Edit</button>
-        <button className="btn--small btn--danger">Delete</button>
-      </div> */}
+      {currentUser.id === comment.comment_author.id && (
+        <>
+          {!showEditForm ? (
+            <div className="comment__buttons-container">
+              <button
+                onClick={() => {
+                  setShowEditForm(true);
+                }}
+                className="btn--small btn--green"
+              >
+                Edit
+              </button>
+              <button className="btn--small btn--danger">Delete</button>
+            </div>
+          ) : (
+            <div className="comment__edit-form">
+              <form>
+                <textarea
+                  name="commentText"
+                  rows="4"
+                  placeholder="Edit comment"
+                ></textarea>
 
-      <div className="comment__edit-form">
-        <form>
-          <textarea
-            name="commentText"
-            rows="4"
-            placeholder="Edit comment"
-          ></textarea>
-
-          <button className="btn btn--small btn--primary">Save</button>
-        </form>
-      </div>
+                <div className="comment__edit-form-buttons-container">
+                  <button className="btn btn--small btn--primary">Save</button>
+                  <button
+                    onClick={() => {
+                      setShowEditForm(false);
+                    }}
+                    className="btn btn--small btn--outline-primary"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }
