@@ -72,6 +72,8 @@ function PostPage({ currentUser }) {
   const handleSubmitComment = (e) => {
     e.preventDefault();
 
+    const postId = history.location.pathname.split("/")[2];
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -82,6 +84,7 @@ function PostPage({ currentUser }) {
       .then((response) => {
         if (response.status === 201) {
           setCommentText("");
+          getComments(postId);
         }
 
         return response.json();
@@ -93,6 +96,19 @@ function PostPage({ currentUser }) {
 
   const handleChangeComment = (e) => {
     setCommentText(e.target.value);
+  };
+
+  const removeComment = (componentId) => {
+    setComments((prevValue) => {
+      const newCommentArray = [];
+      prevValue.forEach((comment) => {
+        if (comment.id !== componentId) {
+          newCommentArray.push(comment);
+        }
+      });
+
+      return newCommentArray;
+    });
   };
 
   return (
@@ -166,11 +182,13 @@ function PostPage({ currentUser }) {
         </div>
 
         <div className="comment-section__comments">
-          {comments.map((comment) => (
+          {comments.map((comment, index) => (
             <Comment
               key={comment.id}
+              componentId={index}
               comment={comment}
               currentUser={currentUser}
+              removeComment={removeComment}
             />
           ))}
         </div>

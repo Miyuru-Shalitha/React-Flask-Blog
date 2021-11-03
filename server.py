@@ -325,7 +325,42 @@ def get_comments(post_id):
 
         comments.append(comment_dict)
 
+    comments.reverse()
+
     return jsonify(comments=comments), 200
+
+
+@app.route("/api/edit-comment", methods=["PATCH"])
+def edit_comment():
+    if request.is_json:
+        request_data = request.get_json()
+        comment_id = request_data.get("comment_id")
+        edited_comment_text = request_data.get("edited_comment_text")
+
+        if (comment_id or edited_comment_text) is not None:
+            comment = Comment.query.get(comment_id)
+            comment.text = edited_comment_text
+
+            db.session.commit()
+
+            return jsonify({"message": "Comment updated successfully!", "updated_comment_text": comment.text}), 200
+
+    return jsonify({"message": "Bad request!"}), 400
+
+
+@app.route("/api/delete-comment", methods=["DELETE"])
+def delete_comment():
+    if request.is_json:
+        comment_id = request.get_json().get("comment_id")
+
+        if comment_id is not None:
+            comment_to_delete = Comment.query.get(comment_id)
+            db.session.delete(comment_to_delete)
+            db.session.commit()
+
+            return jsonify({"message": "Comment deleted successfully!"}), 204
+
+    return jsonify({"message": "Bad request!"}), 400
 
 # #######################################################
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))
