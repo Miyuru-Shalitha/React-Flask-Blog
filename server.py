@@ -230,7 +230,7 @@ def get_post(post_id):
     blog_post_dict = {
         "id": blog_post.id,
         "date": blog_post.date,
-        "author": blog_post.author.username,
+        "author": {"id": blog_post.author.id, "username": blog_post.author.username},
         "title": blog_post.title,
         "subtitle": blog_post.subtitle,
         "img_url": blog_post.img_url,

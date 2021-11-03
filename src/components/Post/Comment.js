@@ -66,7 +66,7 @@ function Comment({ componentId, comment, currentUser, removeComment }) {
       )}
 
       <div className="comment__details">
-        <p className="comment__author">{comment.author}</p>
+        <p className="comment__author">{comment.comment_author.username}</p>
         {/* <p>Date</p> */}
       </div>
 

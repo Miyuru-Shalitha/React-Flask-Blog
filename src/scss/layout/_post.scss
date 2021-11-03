@@ -12,6 +12,12 @@
     width: 100%;
   }
 
+  &__preview-image {
+    position: absolute;
+    right: rem(10);
+    bottom: rem(10);
+  }
+
   &__heading-text-container {
     position: absolute;
     top: 50%;

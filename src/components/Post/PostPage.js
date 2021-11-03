@@ -9,7 +9,7 @@ function PostPage({ currentUser }) {
   const [post, setPost] = useState({
     id: "",
     date: "",
-    author: "",
+    author: { id: "", username: "" },
     title: "",
     subtitle: "",
     imgUrl: "",
@@ -32,7 +32,10 @@ function PostPage({ currentUser }) {
         setPost({
           id: blogPost.id,
           date: blogPost.date,
-          author: blogPost.author,
+          author: {
+            id: blogPost.author.id,
+            username: blogPost.author.username,
+          },
           title: blogPost.title,
           subtitle: blogPost.subtitle,
           imgUrl: blogPost.img_url,
@@ -115,12 +118,19 @@ function PostPage({ currentUser }) {
     <div className="post">
       <div className="post__header">
         <img src={post.imgUrl} alt="Post image" className="post__image" />
+        <a
+          href={post.imgUrl}
+          target="_blank"
+          className="post__preview-image btn btn--primary"
+        >
+          Preview image
+        </a>
 
         <div className="post__heading-text-container">
           <h1 className="heading-primary u-font-lg">{post.title}</h1>
           <h2 className="heading-secondary">{post.subtitle}</h2>
 
-          <p>{post.author}</p>
+          <p>{post.author.username}</p>
           <p>{post.date}</p>
         </div>
       </div>
@@ -136,14 +146,16 @@ function PostPage({ currentUser }) {
           <button className="btn btn--primary">Back to homepage</button>
         </Link>
 
-        <div className="post__control-buttons">
-          <button onClick={handleDeletePost} className="btn btn--danger">
-            Delete
-          </button>
-          <Link to={`/edit-post/${post.id}`}>
-            <button className="btn btn--green">Edit</button>
-          </Link>
-        </div>
+        {currentUser?.id === post.author.id && (
+          <div className="post__control-buttons">
+            <button onClick={handleDeletePost} className="btn btn--danger">
+              Delete
+            </button>
+            <Link to={`/edit-post/${post.id}`}>
+              <button className="btn btn--green">Edit</button>
+            </Link>
+          </div>
+        )}
       </div>
 
       <hr />
@@ -162,6 +174,7 @@ function PostPage({ currentUser }) {
               placeholder="Add a comment"
               onChange={handleChangeComment}
               value={commentText}
+              required
             ></textarea>
 
             <div className="comment-section__form-buttons-container">
