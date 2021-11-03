@@ -294,6 +294,27 @@ def add_comment():
 
     return jsonify({"message": "Hello, world!"}), 200
 
+
+@app.route("/api/post/<int:post_id>/get-comments")
+def get_comments(post_id):
+
+    blog_post = BlogPost.query.get(post_id)
+
+    comments = []
+
+    for comment in blog_post.comments:
+        comment_dict = {
+            "id": comment.id,
+            "post_id": comment.post_id,
+            "comment_author": comment.comment_author.username,
+            # "comment_author_profile_img_url": comment.comment_author.img_url,
+            "text": comment.text
+        }
+
+        comments.append(comment_dict)
+
+    return jsonify(comments=comments), 200
+
 # #######################################################
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))
 # app.logger.setLevel(logging.ERROR)

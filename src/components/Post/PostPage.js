@@ -16,6 +16,8 @@ function PostPage({ match }) {
     body: "",
   });
 
+  const [comments, setComments] = useState([]);
+
   const [commentText, setCommentText] = useState("");
 
   useEffect(() => {
@@ -34,8 +36,18 @@ function PostPage({ match }) {
           imgUrl: blogPost.img_url,
           body: blogPost.body,
         });
+
+        getComments(blogPost.id);
       });
   }, []);
+
+  const getComments = (postId) => {
+    fetch(`/api/post/${postId}/get-comments`)
+      .then((response) => response.json())
+      .then((data) => {
+        setComments(data.comments);
+      });
+  };
 
   const handleDeletePost = () => {
     const requestOptions = {
@@ -152,11 +164,9 @@ function PostPage({ match }) {
         </div>
 
         <div className="comment-section__comments">
-          <Comment />
-
-          <Comment />
-
-          <Comment />
+          {comments.map((comment) => (
+            <Comment key={comment.id} comment={comment} />
+          ))}
         </div>
       </div>
     </div>
