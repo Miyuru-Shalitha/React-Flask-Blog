@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import CreatePostPage from "./CreatePost/CreatePostPage";
 import PostPage from "./Post/PostPage";
+import ProfilePage from "./Profile/ProfilePage";
 
 const ACTIONS = {
   LOG_IN: "log-in",
@@ -70,6 +71,8 @@ function App() {
           <Route path="/post/:postId">
             <PostPage currentUser={currentUser} />
           </Route>
+
+          <Route path="/profile" component={ProfilePage} />
         </Switch>
       </Router>
       <Footer />

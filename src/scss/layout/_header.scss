@@ -26,10 +26,37 @@
 
   &__profile-avatar-container {
     // margin-left: rem(8);
+    position: relative;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__profile-avatar {
     width: rem(45);
     border-radius: rem(25);
+  }
+
+  &__dropdown {
+    background-color: $color-white;
+    width: rem(150);
+    border-radius: rem(3);
+    box-shadow: 0 rem(2) rem(5) rgba($color-grey-dark, 0.7);
+    overflow: hidden;
+
+    position: absolute;
+    top: rem(50);
+    right: 0;
+    z-index: 10000;
+
+    &-item {
+      padding: rem(10);
+      color: $color-primary;
+
+      &:hover {
+        background-color: $color-grey-light;
+      }
+    }
   }
 }
