@@ -10,8 +10,8 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 
 
 app = Flask(__name__)
-# app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-app.config["SECRET_KEY"] = "It's a secret!"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+# app.config["SECRET_KEY"] = "It's a secret!"
 
 #####################################################################
 uri = os.getenv("DATABASE_URL", "sqlite:///react-flask-blog.db")
@@ -92,6 +92,7 @@ def get_post_page(post_id):
 @app.route("/edit-post/<int:post_id>")
 def edit_post_page(post_id):
     return render_template("index.html")
+
 
 @app.route("/profile")
 def profile_page():
@@ -373,4 +374,4 @@ def delete_comment():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
